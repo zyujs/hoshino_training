@@ -1,11 +1,11 @@
 from hoshino import aiorequests
 
 #超时时间
-timeout = 60
+timeout = 120
 
 #代理, 必须使用http代理, 不使用请留空
 proxy = ''
-#proxy = 'http://172.17.0.1:1081
+#proxy = 'http://172.17.0.1:1081'
 
 proxies={
     'http': proxy,
@@ -20,6 +20,7 @@ class Fake_aiorequests:
         pass
 
     async def get(self, url, params=None, **kwargs):
+        kwargs['timeout'] = timeout
         return await aiorequests.get(url, proxies=proxies, params=params, **kwargs)
 
 fake_aiorequests = Fake_aiorequests()
