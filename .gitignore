@@ -1,0 +1,7 @@
+__pycache__/
+*.py[cod]
+.vscode/
+
+functions/*
+!functions/query.py
+!functions/util.py
