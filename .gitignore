@@ -5,3 +5,4 @@ __pycache__/
 functions/*
 !functions/query.py
 !functions/util.py
+!functions/comic.py

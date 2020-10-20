@@ -11,7 +11,16 @@ Hoshino调教助手
 ## 目前实现的修改
 
 - 移除抽卡禁言
+
+  移除来一井抽卡后的禁言
+
 - rank图快捷修改
+
+  将最新rank图以 `rXX-X-服务器.png` 格式放入 `HoshinoBot\res\img\priconne\quick`文件夹中, 不需要重启hoshino, rank系列命令即可输出最新rank图.
+
+- comic模块下载功能增强
+
+  可以为comic模块的检查更新和漫画下载设置超时时间和代理, 避免满屏幕的comic.py报错刷屏, 详见 `functions/comic.py` 内注释.
 
 ## 安装方法
 

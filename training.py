@@ -68,6 +68,6 @@ def load_functions(flist):
 
 @nonebot.on_startup
 async def startup():
-    path_list = get_functions_list()
-    load_functions(path_list)
+    flist = get_functions_list()
+    load_functions(flist)
 
