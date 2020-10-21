@@ -3,6 +3,7 @@
 from hoshino import util, R
 import os
 import re
+from hoshino.modules.hoshino_training.util.rex import *
 
 def get_rank_pic(server='cn'):
     path = f'priconne/quick'
@@ -82,11 +83,4 @@ async def rank_sheet(bot, ev):
         await bot.send(ev, '\n'.join(msg), at_sender=True)
         await util.silence(ev, 60)
 
-replace_list = [
-    {
-        'mode': 'rex',
-        'module': r'^(\*?([日台国陆b])服?([前中后]*)卫?)?rank(表|推荐|指南)?$',
-        'func_name': 'rank_sheet',
-        'func': rank_sheet,
-    }
-]
+rex_replace(r'^(\*?([日台国陆b])服?([前中后]*)卫?)?rank(表|推荐|指南)?$', rank_sheet)

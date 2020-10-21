@@ -1,4 +1,5 @@
 from hoshino import aiorequests
+from hoshino.modules.hoshino_training.util.module import *
 
 #超时时间
 timeout = 120
@@ -15,7 +16,7 @@ proxies={
 async def get(url, params=None, **kwargs):
     return None
 
-class Fake_aiorequests:
+class NewAaiorequests:
     def __init__(self):
         pass
 
@@ -23,13 +24,6 @@ class Fake_aiorequests:
         kwargs['timeout'] = timeout
         return await aiorequests.get(url, proxies=proxies, params=params, **kwargs)
 
-fake_aiorequests = Fake_aiorequests()
+new_aiorequests = NewAaiorequests()
 
-replace_list = [
-    {
-        'mode': 'module',
-        'module': 'hoshino.modules.priconne.comic',
-        'func_name': 'aiorequests',
-        'func': fake_aiorequests,
-    }
-]
+module_replace('hoshino.modules.priconne.comic', 'aiorequests', new_aiorequests)

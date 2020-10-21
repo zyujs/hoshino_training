@@ -22,6 +22,11 @@ Hoshino调教助手
 
   可以为comic模块的检查更新和漫画下载设置超时时间和代理, 避免满屏幕的comic.py报错刷屏, 详见 `functions/comic.py` 内注释.
 
+- anti-holo模块增强
+
+  可以自定义删除容易误伤的触发词, 可以随机发送多个舔狗图.
+  请将自行收集的嘲讽vtb舔狗图片放置于 `res/img/anti-holo` 目录, 插件将随机选择图片发送. 如果该文件夹不存在, 插件会尝试发送anti-holo原图片 `res/img/hahaha_vtb_tiangou.jpg`. 如果找不到图片, 插件将发送文字: "vtb舔狗,爬!".
+
 ## 安装方法
 
 1. 在HoshinoBot的插件目录modules下clone本项目 `git clone https://github.com/zyujs/hoshino_training.git`
