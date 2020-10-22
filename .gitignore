@@ -7,3 +7,4 @@ functions/*
 !functions/util.py
 !functions/comic.py
 !functions/anti-holo.py
+!functions/chara.py

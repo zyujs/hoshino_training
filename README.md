@@ -8,24 +8,38 @@ Hoshino调教助手
 
 本项目地址 https://github.com/zyujs/hoshino_training
 
-## 目前实现的修改
+## 结构说明
 
-- 移除抽卡禁言
+`functions` 目录为模块存放目录, 插件会自动加载该目录下全部.py文件, 您可以根据需要参考预置模块格式自行编写模块并放置在该目录下. `util` 文件夹内文件为针对各种接口的反射工具, 可在模块中使用.
+
+## 预置模块介绍
+
+- `functions/util.py` 移除抽卡禁言
 
   移除来一井抽卡后的禁言
 
-- rank图快捷修改
+- `functions/query.py` rank图快捷修改
 
   将最新rank图以 `rXX-X-服务器.png` 格式放入 `HoshinoBot\res\img\priconne\quick`文件夹中, 不需要重启hoshino, rank系列命令即可输出最新rank图.
 
-- comic模块下载功能增强
+- `functions/comic.py` comic模块下载功能增强
 
   可以为comic模块的检查更新和漫画下载设置超时时间和代理, 避免满屏幕的comic.py报错刷屏, 详见 `functions/comic.py` 内注释.
 
-- anti-holo模块增强
+- `functions/anti-holo.py` anti-holo模块增强
 
   可以自定义删除容易误伤的触发词, 可以随机发送多个舔狗图.
   请将自行收集的嘲讽vtb舔狗图片放置于 `res/img/anti-holo` 目录, 插件将随机选择图片发送. 如果该文件夹不存在, 插件会尝试发送anti-holo原图片 `res/img/hahaha_vtb_tiangou.jpg`. 如果找不到图片, 插件将发送文字: "vtb舔狗,爬!".
+
+- `functions/chara.py` 角色&卡池自动更新
+
+  本模块将在每次hoshino启动时以及每天下午2-3点间某个随机时间自动更新角色数据和卡池数据, 无需任何操作. 请注意本模块会和 [pcrbot/gacha](https://github.com/pcrbot/gacha) 卡池自动更新项目冲突, 如果已安装 `gacha` 项目, 请删除本模块(`functions/chara.py`)避免冲突.
+
+  卡池数据更新来源: <https://api.redive.lolikon.icu/gacha/default_gacha.json>
+
+  角色数据更新来源: <https://api.redive.lolikon.icu/gacha/unitdata.py>
+
+  本模块部分代码参考了 <https://github.com/pcrbot/gacha> 项目, 感谢作者 [@var-mixer](https://github.com/var-mixer).
 
 ## 安装方法
 
