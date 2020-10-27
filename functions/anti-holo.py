@@ -9,7 +9,10 @@ from hoshino.modules.hoshino_training.util.module import *
 from hoshino.modules.hoshino_training.util.keyword import *
 
 #从HoshinoBot\hoshino\modules\groupmaster\anti_holo.py的SB_HOLO触发词中删除指定词语
-WHITE_LIST = ['可可', '华生', '艾米']
+WHITE_LIST = '''
+可可
+凑阿库娅 湊あくあ Minato Aqua 阿库娅 洋葱 阿夸 夸哥 夸神 海王 山田赫敏 大亏哥 桐谷夸人 
+'''.split()
 
 def get_origin_tiangou_pic():
     res = R.img('hahaha_vtb_tiangou.jpg')

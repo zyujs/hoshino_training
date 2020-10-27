@@ -4,10 +4,10 @@ import importlib
 import traceback
 
 def get_functions_list():
+    fnlist = []
     path = os.path.join(os.path.dirname(__file__), 'functions')
     if not os.path.exists(path):
-        return None
-    fnlist = []
+        return fnlist
     for fn in os.listdir(path):
         s = fn.split('.')
         if len(s) >=2 and s[-1] == 'py':

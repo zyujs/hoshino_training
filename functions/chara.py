@@ -183,8 +183,10 @@ async def update_data():
     save_data()
 
 async def check_pool_update():
+    global startup_job
     if startup_job:
         startup_job.remove()
+        startup_job = None
     await update_data()
 
 load_data()
@@ -196,4 +198,4 @@ module_replace('hoshino.modules.priconne.chara', 'Chara', NewChara)
 module_replace('hoshino.modules.priconne.gacha', 'Gacha', NewGacha)
 
 startup_job = nonebot.scheduler.add_job(check_pool_update, 'interval', seconds=5)
-nonebot.scheduler.add_job(check_pool_update, 'cron', hour=2, minute=random.randint(0, 59))
+nonebot.scheduler.add_job(check_pool_update, 'interval', hours=4)
