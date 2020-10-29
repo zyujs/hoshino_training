@@ -2,9 +2,15 @@ __pycache__/
 *.py[cod]
 .vscode/
 
+#排除自定义模块
 functions/*
+
+#默认启用的模块
 !functions/query.py
 !functions/util.py
 !functions/comic.py
 !functions/anti-holo.py
 !functions/chara.py
+
+#默认禁用的模块
+!functions/news.py.disable

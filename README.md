@@ -41,6 +41,12 @@ Hoshino调教助手
 
   本模块部分代码参考了 <https://github.com/pcrbot/gacha> 项目, 感谢作者 [@var-mixer](https://github.com/var-mixer).
 
+- `functions/news.py` 禁用新闻更新
+
+  禁用bili_news_poller,sonet_news_poller服务的检查更新任务, 如果已安装各种新闻或rss插件(如[rss](https://github.com/zyujs/rss)), 可以启动该模块阻止HoshinoBot内置新闻模块检查更新以避免无意义的log刷屏.
+
+  该模块默认禁用, 如需启用, 请将 `news.py.disable` 复制一份并改名为 `news.py`.
+
 ## 安装方法
 
 1. 在HoshinoBot的插件目录modules下clone本项目 `git clone https://github.com/zyujs/hoshino_training.git`

@@ -1,5 +1,7 @@
+import nonebot
 from hoshino import aiorequests
 from hoshino.modules.hoshino_training.util.module import *
+from hoshino.modules.hoshino_training.util.scheduler import *
 
 #超时时间
 timeout = 120
@@ -13,6 +15,8 @@ proxies={
     'https': proxy,
 }
 
+update_seeker = None
+
 async def get(url, params=None, **kwargs):
     return None
 
@@ -24,6 +28,18 @@ class NewAaiorequests:
         kwargs['timeout'] = timeout
         return await aiorequests.get(url, proxies=proxies, params=params, **kwargs)
 
-new_aiorequests = NewAaiorequests()
+async def new_update_seeker():
+    global update_seeker
+    if update_seeker:
+        try:
+            await update_seeker()
+        except:
+            pass
 
+new_aiorequests = NewAaiorequests()
 module_replace('hoshino.modules.priconne.comic', 'aiorequests', new_aiorequests)
+
+update_seeker = module_get('hoshino.modules.priconne.comic', 'update_seeker')
+if update_seeker:
+    scheduler_remove('hoshino.modules.priconne.comic:update_seeker')
+    nonebot.scheduler.add_job(new_update_seeker, 'interval', minutes=5)
