@@ -6,6 +6,7 @@ import nonebot
 import aiohttp
 import random
 import traceback
+import csv
 from ast import literal_eval
 
 from hoshino.modules.hoshino_training.util.module import *
@@ -20,11 +21,11 @@ CUSTOM_CHARA = {
 }
 
 startup_job = None
-data = {}
 
-ver_url = 'https://api.redive.lolikon.icu/gacha/gacha_ver.json'
-gacha_url = 'https://api.redive.lolikon.icu/gacha/default_gacha.json'
-pcr_data_url = 'https://api.redive.lolikon.icu/gacha/unitdata.py'
+data = {
+    'chara': {},
+    'gacha': {},
+}
 
 pool_name = {
     'BL': {'BL', 'bl', 'Bl', 'bL', 'CN', 'cn'},
@@ -61,7 +62,7 @@ class NewChara(Chara):
     @property
     def name(self):
         name = super(NewChara, self).name
-        if name == '未知角色':
+        if name == '未知角色' and self.id in data['chara']:
             name = data['chara'][self.id][0]
             if jp.search(name) and len(data['chara'][self.id]) > 1:
                 name = data['chara'][self.id][1]
@@ -114,8 +115,6 @@ def load_data():
     try:
         with open(path, encoding='utf8') as f:
             d = json.load(f)
-            if 'ver' in d:
-                data['ver'] = d['ver']
             if 'gacha' in d:
                 data['gacha'] = d['gacha']
             if 'chara' in d:
@@ -133,52 +132,59 @@ def ids_to_names(id_list):
     return name_list
 
 async def update_data():
-    #版本
-    ver_data = await query_data(ver_url, True)
-    if not ver_data:
-        return
-    if 'ver' in data and ver_data['ver'] == data['ver']:
-        return
-    data['ver'] = ver_data['ver']
 
-    #角色
-    chara_data = await query_data(pcr_data_url)
-    if not chara_data:
-        return
-    chara_data = chara_data.replace('CHARA_NAME = ', '')
-    try:
-        chara_data = literal_eval(chara_data)
-    except:
-        chara_data = {}
+    #pcrbot/pcr-nickname
+    csv_data = await query_data('https://raw.fastgit.org/pcrbot/pcr-nickname/master/nicknames.csv')
+    if csv_data:
+        reader = csv.reader(csv_data.strip().split('\n'))
+        for row in reader:
+            if row[0].isdigit():
+                row[1], row[2] = row[2], row[1]
+                data['chara'][int(row[0])] = row[1:]
+
+    #unitdata.py
+    chara_data = await query_data('https://api.redive.lolikon.icu/gacha/unitdata.py')
+    if chara_data:
+        chara_data = chara_data.replace('CHARA_NAME = ', '')
+        try:
+            chara_data = literal_eval(chara_data)
+        except:
+            chara_data = {}
+        for k, v in chara_data.items():
+            if k in data['chara']:
+                for sv in v:
+                    if sv not in data['chara'][k]:
+                        data['chara'][k].append(sv)
+            else:
+                data['chara'][k] = v
+    
     #加入自定义角色
     for k, v in CUSTOM_CHARA.items():
-        if k not in chara_data:
-            chara_data[k] = v
-    data['chara'] = chara_data
+        if k not in data['chara']:
+            data['chara'][k] = v
+
+    #update roster
     new_roster.update()
 
     #抽卡
-    gacha_data = await query_data(gacha_url, True)
-    if not chara_data:
-        return
-    if 'gacha' not in data:
-        data['gacha'] = {}
-    for k, v in gacha_data.items():
-        if 'up' in v:
-            v['up'] = ids_to_names(v['up'])
-        if 'star1' in v:
-            v['star1'] = ids_to_names(v['star1'])
-        if 'star2' in v:
-            v['star2'] = ids_to_names(v['star2'])
-        if 'star3' in v:
-            v['star3'] = ids_to_names(v['star3'])
-        if k in pool_name['JP']:
-            data['gacha']['JP'] = v
-        elif k in pool_name['TW']:
-            data['gacha']['TW'] = v
-        elif k in pool_name['BL']:
-            data['gacha']['BL'] = v
-        #ALL池不使用
+    gacha_data = await query_data('https://api.redive.lolikon.icu/gacha/default_gacha.json', True)
+    if chara_data:
+        for k, v in gacha_data.items():
+            if 'up' in v:
+                v['up'] = ids_to_names(v['up'])
+            if 'star1' in v:
+                v['star1'] = ids_to_names(v['star1'])
+            if 'star2' in v:
+                v['star2'] = ids_to_names(v['star2'])
+            if 'star3' in v:
+                v['star3'] = ids_to_names(v['star3'])
+            if k in pool_name['JP']:
+                data['gacha']['JP'] = v
+            elif k in pool_name['TW']:
+                data['gacha']['TW'] = v
+            elif k in pool_name['BL']:
+                data['gacha']['BL'] = v
+            #ALL池不使用
 
     save_data()
 
