@@ -49,7 +49,7 @@ class NewRoster(Roster):
             for idx, names in data['chara'].items():
                 for name in names:
                     name = hoshino.util.normalize_str(name)
-                    if name not in self._roster:
+                    if name and name not in self._roster:
                         self._roster[name] = idx
             self._all_name_list = self._roster.keys()
 
