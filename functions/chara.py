@@ -134,8 +134,9 @@ def ids_to_names(id_list):
 async def update_data():
 
     #pcrbot/pcr-nickname
-    csv_data = await query_data('https://raw.fastgit.org/pcrbot/pcr-nickname/master/nicknames.csv')
+    csv_data = await query_data('https://raw.fastgit.org/pcrbot/pcr-nickname/master/nicknames_zh-cn.csv')
     if csv_data:
+        csv_data = csv_data.replace('"', '')
         reader = csv.reader(csv_data.strip().split('\n'))
         for row in reader:
             if row[0].isdigit():
