@@ -18,7 +18,13 @@ Hoshino调教助手
 
   移除来一井抽卡后的禁言, 增加"来一井"每日可抽次数至5次.
 
-- `functions/query.py` rank图快捷修改
+- `functions/rank_online.py` rank图自动更新
+
+  rank系列命令即可输出最新rank图, 每4小时自动更新一次数据, 使用该模块需要安装git工具及requirements.txt中依赖项.
+
+  数据来源: <https://github.com/pcrbot/pcr-rank_data>
+
+- `functions/rank.py` (默认不启用)rank图快捷修改
 
   将最新rank图以 `rXX-X-服务器.png` 格式放入 `HoshinoBot\res\img\priconne\quick`文件夹中, 不需要重启hoshino, rank系列命令即可输出最新rank图.
 
@@ -41,7 +47,7 @@ Hoshino调教助手
 
   本模块部分代码参考了 <https://github.com/pcrbot/gacha> 项目, 感谢作者 [@var-mixer](https://github.com/var-mixer).
 
-- `functions/news.py` 禁用新闻更新
+- `functions/news.py` (默认不启用)禁用新闻更新
 
   禁用bili_news_poller,sonet_news_poller服务的检查更新任务, 如果已安装各种新闻或rss插件(如[rss](https://github.com/zyujs/rss)), 可以启动该模块阻止HoshinoBot内置新闻模块检查更新以避免无意义的log刷屏.
 

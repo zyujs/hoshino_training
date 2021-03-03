@@ -6,7 +6,8 @@ __pycache__/
 functions/*
 
 #默认启用的模块
-!functions/query.py
+!functions/rank.py.disable
+!functions/rank_online.py
 !functions/util.py
 !functions/comic.py
 !functions/anti-holo.py
