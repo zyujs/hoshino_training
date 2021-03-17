@@ -20,9 +20,9 @@ Hoshino调教助手
 
 - `functions/rank_online.py` rank图自动更新
 
-  rank系列命令即可输出最新rank图, 每4小时自动更新一次数据, 使用该模块需要安装git工具及requirements.txt中依赖项.
+  rank系列命令输出最新rank图, 每4小时自动更新一次数据, 使用该模块需要安装git工具及requirements.txt中依赖项.
 
-  数据来源: <https://github.com/pcrbot/pcr-rank_data>
+  数据来源: <https://github.com/ColdThunder11/pcr-rank_data>
 
 - `functions/rank.py` (默认不启用)rank图快捷修改
 
