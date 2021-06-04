@@ -50,6 +50,7 @@ async def anti_holo(bot: HoshinoBot, ev: CQEvent):
 
 SB_HOLO = module_get('hoshino.modules.groupmaster.anti_holo', 'SB_HOLO')
 if SB_HOLO:
-    keyword_replace(SB_HOLO, anti_holo)
-    keyword_remove(WHITE_LIST)
-    keyword_add(BLACK_LIST, SB_HOLO)
+    #keyword_replace(SB_HOLO, anti_holo)
+    #keyword_remove(WHITE_LIST)
+    #keyword_add(BLACK_LIST, SB_HOLO)
+    keyword_remove(SB_HOLO)

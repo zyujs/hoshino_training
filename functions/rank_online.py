@@ -15,9 +15,11 @@ except:
 startup_job = None
 
 route = {
-    'cn': '/rank/stable/cn/xbg/',
-    'tw': '/rank/stable/tw/ymnt/',
-    'jp': '/rank/stable/jp/sl/',
+    'ffby': '/rank/stable/cn/ffby/',
+    'xbg': '/rank/stable/cn/xbg/',
+    'wy': '/rank/stable/tw/wy/',
+    'ymnt': '/rank/stable/tw/ymnt/',
+    'sl': '/rank/stable/jp/sl/',
 }
 
 async def run_sync_func(func, *args, **kwargs):
@@ -44,7 +46,7 @@ startup_job = nonebot.scheduler.add_job(check_online_data, 'interval', seconds=5
 nonebot.scheduler.add_job(check_online_data, 'interval', hours=4)
 
 
-def get_rank_pic(server='cn'):
+def get_rank_pic(server='xbg'):
     path = f'priconne/quick/pcr-rank_data'
     res = R.img(path + route[server])
     if not os.path.exists(res.path):
@@ -67,24 +69,32 @@ def get_rank_pic(server='cn'):
 
 async def rank_sheet(bot, ev):
     match = ev['match']
-    is_jp = match.group(2) == '日'
-    is_tw = match.group(2) == '台'
-    is_cn = match.group(2) and match.group(2) in '国陆b'
-    if not is_jp and not is_tw and not is_cn:
+    if not match.group(2):
+        server = None
+    elif match.group(2) in '国陆b':
+        server = 'xbg'
+    elif match.group(2) == 'x':
+        server = 'xbg'
+    elif match.group(2) == 'f':
+        server = 'ffby'
+    elif match.group(2) in '日':
+        server = 'sl'
+    elif match.group(2) in '台':
+        server = 'wy'
+    elif match.group(2) == 'w':
+        server = 'wy'
+    elif match.group(2) == 'y':
+        server = 'ymnt'
+    else:
+        server = None
+
+    if not server:
         await bot.send(ev, '\n请问您要查询哪个服务器的rank表？\n*日rank表\n*台rank表\n*陆rank表', at_sender=True)
         return
+
     msg = [
         '\n※表格仅供参考，升r有风险，强化需谨慎\n※一切以会长要求为准——',
     ]
-    if is_jp:
-        server = 'jp'
-        msg.append(f'※不定期搬运自图中Q群\n※广告为原作者推广，与本bot无关')
-    elif is_tw:
-        server = 'tw'
-        msg.append(f'※不定期搬运自漪夢奈特\n※油管频道有介绍视频及原文档')
-    elif is_cn:
-        server = 'cn'
-        msg.append(f'※不定期搬运自B站专栏\n※制作by席巴鸽')
 
     flist = get_rank_pic(server)
 
@@ -102,4 +112,4 @@ async def rank_sheet(bot, ev):
     await bot.send(ev, '\n'.join(msg), at_sender=True)
     await util.silence(ev, 60)
 
-rex_replace(r'^(\*?([日台国陆b])服?([前中后]*)卫?)?rank(表|推荐|指南)?$', rank_sheet)
+rex_replace(r'^(\*?([日台国陆b])服?([前中后]*)卫?)?rank(表|推荐|指南)?$', rank_sheet, r'^(\*?([日台国陆bxfwy])服?([前中后]*)卫?)?rank(表|推荐|指南)?$')
