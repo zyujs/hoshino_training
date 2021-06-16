@@ -34,7 +34,7 @@ async def check_online_data():
 
     res = R.img(f'priconne/quick/pcr-rank_data')
     if not os.path.exists(res.path):
-        repo = await run_sync_func(Repo.clone_from,'https://hub.fastgit.org/ColdThunder11/pcr-rank_data.git', res.path)
+        repo = await run_sync_func(Repo.clone_from,'https://github.com/pcrbot/pcr-rank_data.git', res.path)
     else:
         repo = Repo(res.path)
     if repo:

@@ -22,7 +22,11 @@ Hoshino调教助手
 
   rank系列命令输出最新rank图, 每4小时自动更新一次数据, 使用该模块需要安装git工具及requirements.txt中依赖项.
 
-  数据来源: <https://github.com/ColdThunder11/pcr-rank_data>
+  如遇数据源仓库迁移导致自动更新出错，请删除 `res/img/priconne/quick/pcr-rank_data` 文件夹并重启HoshinoBot, 等待插件重新拉取数据仓库.
+
+  数据来源: <https://github.com/pcrbot/pcr-rank_data>
+
+  感谢数据源维护者 @[ColdThunder11](https://github.com/ColdThunder11)
 
 - `functions/rank.py` (默认不启用)rank图快捷修改
 
