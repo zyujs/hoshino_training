@@ -78,13 +78,9 @@ async def rank_sheet(bot, ev):
         server = 'xbg'
     elif match.group(2) == 'f':
         server = 'ffby'
-    elif match.group(2) == 'y':
-        server = 'yhtd'
     elif match.group(2) in '日':
         server = 'sl'
     elif match.group(2) in '台':
-        server = 'wy'
-    elif match.group(2) == 'w':
         server = 'wy'
     elif match.group(2) == 'y':
         server = 'ymnt'
