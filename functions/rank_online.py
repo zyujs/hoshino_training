@@ -17,6 +17,7 @@ startup_job = None
 route = {
     'ffby': '/rank/stable/cn/ffby/',
     'xbg': '/rank/stable/cn/xbg/',
+    'yhtd': '/rank/stable/cn/yhtd/',
     'wy': '/rank/stable/tw/wy/',
     'ymnt': '/rank/stable/tw/ymnt/',
     'sl': '/rank/stable/jp/sl/',
@@ -72,11 +73,13 @@ async def rank_sheet(bot, ev):
     if not match.group(2):
         server = None
     elif match.group(2) in '国陆b':
-        server = 'xbg'
+        server = 'yhtd'
     elif match.group(2) == 'x':
         server = 'xbg'
     elif match.group(2) == 'f':
         server = 'ffby'
+    elif match.group(2) == 'y':
+        server = 'yhtd'
     elif match.group(2) in '日':
         server = 'sl'
     elif match.group(2) in '台':
