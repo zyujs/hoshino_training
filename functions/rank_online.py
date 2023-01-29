@@ -21,6 +21,12 @@ route = {
     'wy': '/rank/stable/tw/wy/',
     'ymnt': '/rank/stable/tw/ymnt/',
     'sl': '/rank/stable/jp/sl/',
+    'jhssssy': '/rank/stable/cn/jhssssy/',
+    'sora': '/rank/stable/cn/sora/',
+    'qkjy': '/rank/stable/cn/qkjy/',
+    'hw': '/rank/stable/cn/hw/',
+    'ymjzc': '/rank/stable/cn/ymjzc/',
+    'wjm': '/rank/stable/cn/wjm/',
 }
 
 async def run_sync_func(func, *args, **kwargs):
@@ -46,8 +52,7 @@ async def check_online_data():
 startup_job = nonebot.scheduler.add_job(check_online_data, 'interval', seconds=5)
 nonebot.scheduler.add_job(check_online_data, 'interval', hours=4)
 
-
-def get_rank_pic(server='xbg'):
+def get_rank_pic(server='hw'):
     path = f'priconne/quick/pcr-rank_data'
     res = R.img(path + route[server])
     if not os.path.exists(res.path):
@@ -73,14 +78,26 @@ async def rank_sheet(bot, ev):
     if not match.group(2):
         server = None
     elif match.group(2) in '国陆b':
-        server = 'xtt'
+        server = 'hw'
     elif match.group(2) == 'x':
-        server = 'xbg'
+        server = 'xtt'
     elif match.group(2) == 'f':
         server = 'ffby'
+    elif match.group(2) == 'j':
+        server = 'jhssssy'
+    elif match.group(2) in 'cs':
+        server = 'sora'
+    elif match.group(2) in 'm喵':
+        server = 'wjm'
+    elif match.group(2) in 'z':
+        server = 'ymjzc'
+    elif match.group(2) == 'q':
+        server = 'qkjy'
+    elif match.group(2) == 'h花':
+        server = 'hw'
     elif match.group(2) in '日':
         server = 'sl'
-    elif match.group(2) in '台':
+    elif match.group(2) in '台w':
         server = 'wy'
     elif match.group(2) == 'y':
         server = 'ymnt'
@@ -111,4 +128,4 @@ async def rank_sheet(bot, ev):
     await bot.send(ev, '\n'.join(msg), at_sender=True)
     await util.silence(ev, 60)
 
-rex_replace(r'^(\*?([日台国陆b])服?([前中后]*)卫?)?rank(表|推荐|指南)?$', rank_sheet, r'^(\*?([日台国陆bxfwy])服?([前中后]*)卫?)?rank(表|推荐|指南)?$')
+rex_replace(r'^(\*?([日台国陆b])服?([前中后]*)卫?)?rank(表|推荐|指南)?$', rank_sheet, r'^(\*?([日台国陆bxfwyjcsqh花m喵z])服?([前中后]*)卫?)?rank(表|推荐|指南)?$')
